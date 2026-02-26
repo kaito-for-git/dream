@@ -1,3 +1,21 @@
-.style{
+.SideBar-Style{
+    flex:none;
+    width: 250vw;
+    background-color: #2f2f2f;
+    transition: width 0.2s ease;
+    overflow: hidden;
+}
+
+.SideBar-Style.open{
+    width: 250px;
+}
+
+.SideBar-Style.closed{
+    width: 50px;
+}
+
+.Hamburger-Style{
     display: flex;
+    color: white;
+    background-color: transparent;
 }

@@ -10,11 +10,8 @@ function App() {
   return (
     <BrowserRouter>
     <div className="app-Container">
-      <div className="app-sideBar">
         < SideBar />
-        {/**ここにサイトドバーを呼ぶ */}
-      </div>
-      <div className="app-mainContent">
+      <div className="app-mainContents">
         < MainContents />
       </div>
     </div>
