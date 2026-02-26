@@ -39,19 +39,12 @@
   width:100vw;
 }
 
-.app-mainContent{
+.app-mainContents{
   flex: 0.8;
   background-color:white;
   display: flex;
 }
 
-.app-sideBar{
-  flex: 0.2;
-  min-width: 200px;
-  max-width: 300px;
-  background-color:gray;
-  display: flex;
-}
 
 .card {
   padding: 2em;
