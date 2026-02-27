@@ -1,4 +1,4 @@
-import { Note } from "../Features/Note";
+import type { Note } from "../Features/Note";
 
 export const dummydate :Note[] =[
     {
