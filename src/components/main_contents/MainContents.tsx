@@ -1,15 +1,13 @@
 import  Header from './header'
-import  MainFeture from './MainFeature'
+import  MainFeature from './MainFeature'
 //メイン画面であるheaderと各機能を描画するためのもの
 
 function MainContents(){
     return(
         <div className="maincontents-main">
-            <div  className="maincontents-header">
+            <div>
                 <Header/>
-            </div>
-            <div className="maincontents-feature">
-                <MainFeture/>
+                <MainFeature/>
             </div>
         </div>
     )
