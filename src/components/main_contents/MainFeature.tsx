@@ -1,9 +1,12 @@
 import './MainFeature.css'
 import {dummydate} from '../Data/dummydate1'
 import type { Note } from '../Features/Note'
+import { useState } from 'react'
 
 //メインの機能を描画する
 function MainFeature(){
+    const [note,setNote]  = useState<Note[]>([]);
+    
     return(
         <div className="MainFeature-main">
             {/*ダミーデータ表示 */}
