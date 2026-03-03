@@ -1,27 +1,24 @@
 import './SideBar.css'
 import { useState } from 'react'
 import { dummydate } from '../Data/dummydate1';
-import type { Note } from '../Features/Note'
+import type { Note,noteProps } from '../Features/Note'
 import { data } from 'react-router-dom';
 import MainFeature from '../main_contents/MainFeature';
 
 //サイドバーの描画をする
-function SideBar(){
+function SideBar({notes,onSelect}:noteProps){
     const [isOpen,setIsOpen] = useState(false);//サイドバーの状態
-    const [note,setNotes] = useState<Note[]>(dummydate);//ノートの状態
-    const [selectedId,SetSelectedId] = useState<string | null>(null);//main featureに渡すための状態
 
     return(
-        <>
         <div className={`SideBar-Style ${isOpen ? 'open' : 'closed'}`}>
             <button className="Hamburger-Style" onClick={() => setIsOpen(!isOpen)}>
                 ☰
             </button>
-            {dummydate.map((note) =>(
+            {notes.map((note) =>(
                 <button 
                 key={note.id}
                 className='Notes-Style' 
-                onClick={() => SetSelectedId(note.id)}//main featureに描画するノートのidを渡す
+                onClick={() => onSelect(note.id)}//main featureに描画するノートのidを渡す
                 >
                 <div className="A-Note-style">
                     <h4>{note.title}</h4>
@@ -37,8 +34,6 @@ function SideBar(){
             </button>
             ))}
         </div>
-        <MainFeature selectedId={selectedId}/>
-        </>
     )
 }
 
