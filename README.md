@@ -32,6 +32,20 @@
 - 検索機能
 - モバイル対応ハンバーガーメニュー
 
+## コーディング規約
+
+### 命名規則
+- 型名(type)は大文字はじまり
+    - 例:"NoteProps","Note"
+
+## 状態表
+Appが全ての状態を持ち、管理する
+|コンポーネント | 機能 | state | props|
+|:---:|:---:|:---:|:---:|
+|App|全ての状態管理,描画|Notes,selectedId|-|
+|MainContents|機能を描画する|-|Note|
+|SideBar|機能の一覧を表示する|-|Notes,selectedId|
+
 ## 技術的挑戦と解決
 &emsp;開発中に直面した問題を記載していく
 
@@ -64,3 +78,7 @@ git remote set-url origin https://[アクセストークン]@github.com
 ### `<div>`多すぎんねん(2026/2/25)
 - **問題** <br> &emsp;Issue#8：メイン画面とサイドバーの作成において、レイアウト用の <div> が何重にも重なり、コードの可読性が低下する。
 - **解決** <br> &emsp;App.tsx をレイアウトの**枠組み**に特化させ、中身（Sidebar, Header等）を個別の .tsx ファイルへ切り出す。
+
+### useStateの切り上げ(2026/2/28)
+- **問題** <br> &emsp;Issue#17対応中にSideBarで選択したものをmaincontentsに描画する際、useStateが多方面で利用することがわかったがSideBarからmaincontentsに渡すと設計がおかしくなると思った。
+- **方針** <br> &emsp;別Issueで親コンポーネントであるapp.tsxに全てのstateの責務を投げることで状態の管理をすると他のファイルでは描画するのみにできると考える。
