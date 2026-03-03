@@ -1,12 +1,12 @@
 import './SideBar.css'
 import { useState } from 'react'
 import { dummydate } from '../Data/dummydate1';
-import type { Note,noteProps } from '../Features/Note'
+import type { Note,NoteProps } from '../Features/Note'
 import { data } from 'react-router-dom';
 import MainFeature from '../main_contents/MainFeature';
 
 //サイドバーの描画をする
-function SideBar({notes,onSelect}:noteProps){
+function SideBar({notes,onSelect}:NoteProps){
     const [isOpen,setIsOpen] = useState(false);//サイドバーの状態
 
     return(

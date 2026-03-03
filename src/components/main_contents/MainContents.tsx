@@ -1,9 +1,9 @@
 import  Header from './header'
 import  MainFeature from './MainFeature'
-import type{ selectNoteIdProps } from '../Features/Note'
+import type{ SelectNoteIdProps } from '../Features/Note'
 //メイン画面であるheaderと各機能を描画するためのもの
 
-function MainContents({selectedId}:selectNoteIdProps){
+function MainContents({selectedId}:SelectNoteIdProps){
     return(
         <div className="maincontents-main">
             <div>

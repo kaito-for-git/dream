@@ -3,11 +3,11 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import MainContents from './components/main_contents/MainContents'
 import SideBar from './components/side_bar/SideBar'
 import { useState } from 'react'
-import type{Note ,selectedIdProps} from './components/Features/Note'
+import type{Note ,SelectedIdProps} from './components/Features/Note'
 import { dummydate } from './components/Data/dummydate1'
 
 function App() {
-  const [selectedId,setSelectedId] = useState<selectedIdProps>(null);
+  const [selectedId,setSelectedId] = useState<SelectedIdProps>(null);
   const [notes,setNotes] = useState<Note[]>(dummydate);//ノートの状態
 
   return (

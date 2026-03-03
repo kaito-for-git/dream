@@ -1,14 +1,14 @@
 import type React from "react";
 
 //ノートのIdをまとめて同じ方にする
-export type noteId = string
+export type NoteId = string
 
 //選択されたノートのIDのprops
-export type selectedIdProps = noteId | null;
+export type SelectedIdProps = NoteId | null;
 
 //ノートのインターフェース
 export interface Note{
-    id:noteId;
+    id:NoteId;
     title:string;
     content:string;
     created:number;
@@ -17,12 +17,12 @@ export interface Note{
 
 
 
- export type selectNoteIdProps = {
-    selectedId : selectedIdProps;
+ export type SelectNoteIdProps = {
+    selectedId : SelectedIdProps;
 }
 
 //useState()を受け取り内容を変更する
-export type noteProps = {
+export type NoteProps = {
     notes : Note[];
     onSelect: (id: string) => void;
 }
