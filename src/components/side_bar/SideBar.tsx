@@ -14,7 +14,8 @@ function SideBar({notes,onSelect}:NoteProps){
             <button className="Hamburger-Style" onClick={() => setIsOpen(!isOpen)}>
                 ☰
             </button>
-            {notes.map((note) =>(
+            {isOpen ?(  //サイドバーが開いている時
+                notes.map((note) =>(
                 <button 
                 key={note.id}
                 className='Notes-Style' 
@@ -32,7 +33,8 @@ function SideBar({notes,onSelect}:NoteProps){
                     </small>
                 </div>
             </button>
-            ))}
+            ))):null //サイドバーが閉じている時
+            }
         </div>
     )
 }
