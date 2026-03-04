@@ -1,9 +1,9 @@
 import './MainFeature.css'
 import {dummydate} from '../Data/dummydate1'
-import type { SelectNoteIdProps } from '../Features/Note'
+import type { MainContentProps } from '../Features/Note'
 
 //メインの機能を描画する
-function MainFeature({selectedId}:SelectNoteIdProps){
+function MainFeature({selectedId,editNote,setEditNote}:MainContentProps){
     const selectedNote = dummydate.find(s=>s.id ===selectedId);
 
     return(
