@@ -3,17 +3,32 @@ import {dummydate} from '../Data/dummydate1'
 import type { MainContentProps } from '../Features/Note'
 
 //メインの機能を描画する
-function MainFeature({selectedId,editNote,setEditNote}:MainContentProps){
-    const selectedNote = dummydate.find(s=>s.id ===selectedId);
+function MainFeature({editNote,setEditNote}:MainContentProps){
 
     return(
         <div className='MainFeature-main'>
-            {selectedNote ? (
+            {editNote ? ( //ノートが選択された場合(true)
                 <>
-                    <h3>{selectedNote.title}</h3>
-                    <p>{selectedNote.content}</p>
+                    <input
+                        value={editNote.title}
+                        onChange={(e)=>
+                            setEditNote({
+                                ...editNote!,title:e.target.value
+                            })
+                        }
+                    >
+                    </input>
+                    <input
+                        value={editNote.content}
+                        onChange={(e)=>
+                            setEditNote({
+                                ...editNote!,content:e.target.value
+                            })
+                        }
+                    >
+                    </input>
                 </>
-                ):(
+                ):(//ノートが選択されていない場合(false)
                     <p>サイドバーからノートを選択</p>
                 )
             }    
