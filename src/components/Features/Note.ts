@@ -12,9 +12,6 @@ export interface Note{
 //ノートのIdをまとめて同じ方にする
 export type NoteId = string;
 
-//選択されたノートのIDのprops
-export type SelectedIdProps = NoteId | null;
-
 //選択されたノートのコピーデータ
 export type CopyNote = Note | null;
 
@@ -26,6 +23,5 @@ export type MainContentProps = {
 //useState()を受け取り内容を変更する
 export type NoteProps = {
     notes : Note[];
-    onSelect: (id: string) => void;
     setEditNote:React.Dispatch<React.SetStateAction<Note | null>>;
 }

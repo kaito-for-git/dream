@@ -6,7 +6,7 @@ import { data } from 'react-router-dom';
 import MainFeature from '../main_contents/MainFeature';
 
 //サイドバーの描画をする
-function SideBar({notes,onSelect,setEditNote}:NoteProps){
+function SideBar({notes,setEditNote}:NoteProps){
     const [isOpen,setIsOpen] = useState(false);//サイドバーの状態
 
     return(
@@ -20,7 +20,6 @@ function SideBar({notes,onSelect,setEditNote}:NoteProps){
                 key={note.id}
                 className='Notes-Style' 
                 onClick={() => {
-                    //onSelect(note.id);//選択されたnote.idをセットする
                     setEditNote({...note});//コピーを作るset関数
                 }}//main featureに描画するノートのidを渡す
                 >
