@@ -19,7 +19,6 @@ export type SelectedIdProps = NoteId | null;
 export type CopyNote = Note | null;
 
 export type MainContentProps = {
-    selectedId : SelectedIdProps;
     editNote : CopyNote;
     setEditNote : React.Dispatch<React.SetStateAction<CopyNote>>;
 }

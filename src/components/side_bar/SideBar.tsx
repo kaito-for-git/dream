@@ -20,7 +20,7 @@ function SideBar({notes,onSelect,setEditNote}:NoteProps){
                 key={note.id}
                 className='Notes-Style' 
                 onClick={() => {
-                    onSelect(note.id);//選択されたnote.idをセットする
+                    //onSelect(note.id);//選択されたnote.idをセットする
                     setEditNote({...note});//コピーを作るset関数
                 }}//main featureに描画するノートのidを渡す
                 >
