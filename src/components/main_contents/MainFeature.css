@@ -1,5 +1,48 @@
 .MainFeature-main{
     display: flex;
-    color: black;
+    flex: 1;
+    background-color: #3a3a3a;
     flex-direction: column;
+}
+
+.Title-and-Save-Box{
+    display: flex;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    background-color:transparent;
+}
+
+.Title-and-Save-Box input{
+    flex: 1;
+    text-align: center;
+    font-size: 22px;
+    color: white;
+    background-color: transparent;
+    border: 1px solid #555555;
+    outline: none;
+}
+
+.Save-Button{
+    display: flex;
+    color: white;
+    font-size: midium;
+    background-color: transparent;
+}
+
+.TexeArea-Box{
+    display: flex;
+    flex: 1;
+    background-color: transparent;
+}
+
+.TexeArea-Box textarea{
+    flex: 1;
+    display: flex;
+    font-size: 16px;
+    color: white;
+    background-color:transparent;
+    border: 1px solid #555555;
+    outline: none;
 }

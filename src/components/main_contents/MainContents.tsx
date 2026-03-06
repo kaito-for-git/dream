@@ -1,3 +1,4 @@
+import './MainContents.css'
 import  Header from './header'
 import  MainFeature from './MainFeature'
 import type{ MainContentProps } from '../Features/Note'
@@ -6,13 +7,11 @@ import type{ MainContentProps } from '../Features/Note'
 function MainContents({editNote,setEditNote}:MainContentProps){
     return(
         <div className="maincontents-main">
-            <div>
-                <Header/>
-                <MainFeature
-                    editNote={editNote}
-                    setEditNote={setEditNote}
-                />
-            </div>
+            <Header/>
+            <MainFeature
+                editNote={editNote}
+                setEditNote={setEditNote}
+            />
         </div>
     )
 }
