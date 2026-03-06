@@ -15,6 +15,7 @@ function App() {
         <div className="app-Container">
             < SideBar 
               notes={notes}
+              editNote={editNote}
               setEditNote={setEditNote}
             />
         

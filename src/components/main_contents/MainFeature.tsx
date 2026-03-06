@@ -1,5 +1,4 @@
 import './MainFeature.css'
-import {dummydate} from '../Data/dummydate1'
 import type { MainContentProps } from '../Features/Note'
 
 //メインの機能を描画する
@@ -9,8 +8,7 @@ function MainFeature({editNote,setEditNote}:MainContentProps){
         <div className='MainFeature-main'>
             {editNote ? ( //ノートが選択された場合(true)
                 <>
-                <div>
-                    {/*タイトル */}
+                <div className='Title-and-Save-Box'>
                     <input
                         value={editNote.title}
                         onChange={(e)=>
@@ -18,15 +16,15 @@ function MainFeature({editNote,setEditNote}:MainContentProps){
                                 ...editNote!,title:e.target.value
                             })
                         }
-                        >
+                    >
                     </input>
-                    {/*保存ボタン */}
-                    <button>
+
+                    <button className='Save-Button'>
                         保存
                     </button>
                 </div>
-                    {/*本文 */}
-                    <input
+                <div className='TexeArea-Box'>
+                    <textarea 
                         value={editNote.content}
                         onChange={(e)=>
                             setEditNote({
@@ -34,7 +32,8 @@ function MainFeature({editNote,setEditNote}:MainContentProps){
                             })
                         }
                     >
-                    </input>
+                    </textarea>
+                </div>
                 </>
                 ):(//ノートが選択されていない場合(false)
                     <p>サイドバーからノートを選択</p>

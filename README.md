@@ -83,6 +83,10 @@ git remote set-url origin https://[アクセストークン]@github.com
 - **問題** <br> &emsp;Issue#17対応中にSideBarで選択したものをmaincontentsに描画する際、useStateが多方面で利用することがわかったがSideBarからmaincontentsに渡すと設計がおかしくなると思った。
 - **方針** <br> &emsp;別Issueで親コンポーネントであるapp.tsxに全てのstateの責務を投げることで状態の管理をすると他のファイルでは描画するのみにできると考える。
 
+### `<input>`値更新ができない(2026/3/5)
+- **問題** <br> &emsp;値を受付はできたが更新できない問題が発生した。
+- **解決** <br> &emsp;value があるが **onChange**のない入力欄をレンダーすると、コンソールにエラーが表示されます。[参考文書](https://ja.react.dev/reference/react-dom/components/input#my-text-input-doesnt-update-when-i-type-into-it)
+
 ### コーディング規約について（2026/3/6）
 - **問題**<br> &emsp;コーディング規約を意識して開発を進めていたものの、内容を明文化していなかったため、記述方法に統一性がない状態が発生した。
 - **方針**<br>  &emsp;現在、編集機能の追加を実装中である。次に新規ノート作成機能の実装が完了した段階でコーディング規約を策定し、その後リファクタリングを実施する予定とする。※後からコードを読み返し振り返りができるようにするため、現状保留
