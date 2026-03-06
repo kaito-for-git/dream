@@ -23,5 +23,6 @@ export type MainContentProps = {
 //useState()を受け取り内容を変更する
 export type NoteProps = {
     notes : Note[];
+    editNote : CopyNote;
     setEditNote:React.Dispatch<React.SetStateAction<Note | null>>;
 }
