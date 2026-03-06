@@ -9,6 +9,8 @@ function MainFeature({editNote,setEditNote}:MainContentProps){
         <div className='MainFeature-main'>
             {editNote ? ( //ノートが選択された場合(true)
                 <>
+                <div>
+                    {/*タイトル */}
                     <input
                         value={editNote.title}
                         onChange={(e)=>
@@ -16,8 +18,14 @@ function MainFeature({editNote,setEditNote}:MainContentProps){
                                 ...editNote!,title:e.target.value
                             })
                         }
-                    >
+                        >
                     </input>
+                    {/*保存ボタン */}
+                    <button>
+                        保存
+                    </button>
+                </div>
+                    {/*本文 */}
                     <input
                         value={editNote.content}
                         onChange={(e)=>
