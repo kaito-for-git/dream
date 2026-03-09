@@ -20,7 +20,7 @@
 }
 
 .Contents-Name{
-    text-align: center
+    text-align: center;
 }
 
 .Notes-Style{
@@ -37,7 +37,7 @@
 
 .A-Note-Style{
     display: flex;
-    justify-content: space-between;;
+    justify-content: space-between;
 }
 
 .A-Note-Title-Style{

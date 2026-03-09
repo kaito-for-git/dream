@@ -1,8 +1,9 @@
 import './MainFeature.css'
 import type { MainContentProps } from '../Features/Note'
 
+
 //メインの機能を描画する
-function MainFeature({editNote,setEditNote}:MainContentProps){
+function MainFeature({editNote,setEditNote,saveHandler}:MainContentProps){
 
     return(
         <div className='MainFeature-main'>
@@ -19,7 +20,8 @@ function MainFeature({editNote,setEditNote}:MainContentProps){
                     >
                     </input>
 
-                    <button className='Save-Button'>
+                    <button className='Save-Button'
+                    onClick={saveHandler}>
                         保存
                     </button>
                 </div>
