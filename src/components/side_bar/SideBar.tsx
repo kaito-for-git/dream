@@ -19,6 +19,11 @@ function SideBar({notes,editNote,setEditNote}:NoteProps){
             {/* ノートの一覧　*/}
             {isOpen ? (
                 <>
+                    <button 
+                    className='New-Note-Button'
+                    >
+                        + ノート新規作成
+                    </button>
                     <p className='Contents-Name'>ノート一覧</p>
 
                     <ul>
