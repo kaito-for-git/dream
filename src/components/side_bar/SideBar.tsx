@@ -6,7 +6,7 @@ import { data } from 'react-router-dom';
 import MainFeature from '../main_contents/MainFeature';
 
 //サイドバーの描画をする
-function SideBar({notes,editNote,setEditNote}:NoteProps){
+function SideBar({notes,editNote,setEditNote,createHandler}:NoteProps){
     const [isOpen,setIsOpen] = useState(false);//サイドバーの状態
 
     return(
@@ -21,6 +21,7 @@ function SideBar({notes,editNote,setEditNote}:NoteProps){
                 <>
                     <button 
                     className='New-Note-Button'
+                    onClick={createHandler}
                     >
                         + ノート新規作成
                     </button>
