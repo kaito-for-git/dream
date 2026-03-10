@@ -11,3 +11,16 @@ export function saveEvent(notes:Note[],editNote:Note){
     })
     return updateNotes
 }
+
+//新しいノートを作成する
+export function createNewNote(){
+    const newNote:Note = {
+        id : crypto.randomUUID(),
+        title : "",
+        content : "",
+        created : Date.now(),
+        updated : Date.now()
+    }
+    
+    return newNote
+}
