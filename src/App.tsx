@@ -3,9 +3,9 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import MainContents from './components/main_contents/MainContents'
 import SideBar from './components/side_bar/SideBar'
 import { useEffect, useState } from 'react'
-import type{Note ,CopyNote} from './components/Features/Note'
+import type{Note,CopyNote} from './components/Features/Note'
 import { dummydate } from './components/Data/dummydate1'
-import { saveEvent,createNewNote } from './components/Features/Utils'
+import { saveEvent,createNewNote} from './components/Features/Utils'
 
 function App() {
   const [notes,setNotes] = useState<Note[]>(()=>{
