@@ -13,6 +13,10 @@
     width: 50px;
 }
 
+.C{
+    display: flex;
+    flex-direction: row;
+}
 .Hamburger-Style{
     display: flex;
     color: white;
@@ -26,9 +30,38 @@
     background-color: transparent;
 }
 
+/* 箱 */
+.Contents-and-Delete{
+    display: flex;
+    width: 100%;
+    background-color: transparent;
+    justify-content: center;
+    align-items: center;
+}
+
+/* キャンセルボタン */
+.Cancel-Button{
+    background-color: gray;
+    color: white;
+    font-size: small;
+}
+
 /* ノート一覧(文字)*/
 .Contents-Name{
     text-align: center;
+    flex: 1;
+}
+
+/* 削除ボタン　通常時 */
+.Delete-Button{
+    size: small;
+    background-color: transparent;
+}
+
+/* 削除ボタン　削除モード時 */
+.Delete-Button.on{
+    border:2px solid darkred;
+    color: white;
 }
 
 /* 一つ一つのノートボタン*/
@@ -43,6 +76,11 @@
 /* 選択されているノート*/
 .Notes-Style.selected{
     border: 1px solid #5ac8fa;
+}
+
+/* 削除モードの時 */
+.Notes-Style.Delete-Mode.selected{
+    border: 1px solid red;
 }
 
 .A-Note-Style{
