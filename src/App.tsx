@@ -3,9 +3,9 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import MainContents from './components/main_contents/MainContents'
 import SideBar from './components/side_bar/SideBar'
 import { useEffect, useState } from 'react'
-import type{Note ,CopyNote} from './components/Features/Note'
+import type{Note,CopyNote} from './components/Features/Note'
 import { dummydate } from './components/Data/dummydate1'
-import { saveEvent } from './components/Features/Utils'
+import { saveEvent,createNewNote} from './components/Features/Utils'
 
 function App() {
   const [notes,setNotes] = useState<Note[]>(()=>{
@@ -25,6 +25,13 @@ function App() {
     localStorage.setItem("notes",JSON.stringify(notes));
   },[notes])
 
+  //ノート新規作成ボタンが押された時のイベントハンドラ
+  const createHandler = () => {
+    const newNote = createNewNote()
+    setNotes([newNote,...notes]);//新しいノートを追加する
+    setEditNote(newNote);
+  }
+
   return (
       <BrowserRouter>
         <div className="app-Container">
@@ -32,6 +39,7 @@ function App() {
               notes={notes}
               editNote={editNote}
               setEditNote={setEditNote}
+              createHandler={createHandler}
             />
         
           <div className="app-mainContents">
