@@ -21,7 +21,7 @@ function App() {
     } 
 
   //notesが変更された時に実行する（自動保存)
-  useEffect(() =>{
+  useEffect(() => {
     localStorage.setItem("notes",JSON.stringify(notes));
   },[notes])
 
