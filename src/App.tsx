@@ -16,13 +16,14 @@ function App() {
   
   //セーブボタンのイベントハンドラ
   const saveHandler = () =>{
-      if (!editNote) return;
-      setNotes(prev => saveEvent(prev,editNote));
-    } 
+    if (!editNote) return;
+    setNotes(prev => saveEvent(prev,editNote));
+  } 
 
-  //notesが変更された時に実行する（自動保存)
+  //notesが変更された時に実行する
   useEffect(() => {
-    localStorage.setItem("notes",JSON.stringify(notes));
+    localStorage.setItem("notes",JSON.stringify(notes));//保存
+    //ソート
   },[notes])
 
   //ノート新規作成ボタンが押された時のイベントハンドラ
@@ -32,14 +33,22 @@ function App() {
     setEditNote(newNote);
   }
 
+  //削除モードで選択されたノートを削除する
+  const deleteHandler = (selectedIds:string[]) => {
+    if(selectedIds.length === 0)return;
+    const newNote = notes.filter(note => !selectedIds.includes(note.id));
+    setNotes(newNote);
+  }
+
   return (
       <BrowserRouter>
-        <div className="app-Container">
+        <div className="app-Container">ß
             < SideBar 
               notes={notes}
               editNote={editNote}
               setEditNote={setEditNote}
               createHandler={createHandler}
+              deleteHandler={deleteHandler}
             />
         
           <div className="app-mainContents">

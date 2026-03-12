@@ -1,23 +1,26 @@
 import './SideBar.css'
-import { useEffect, useState } from 'react'
-import { dummydate } from '../Data/dummydate1';
-import type { Note,NoteProps } from '../Features/Note'
-import { data } from 'react-router-dom';
-import MainFeature from '../main_contents/MainFeature';
-import {deleteHandler} from './SideBarHandler'
+import { useState } from 'react'
+import type { SideBarProps } from '../Features/Note'
 
 //サイドバーの描画をする
-function SideBar({notes,editNote,setEditNote,createHandler}:NoteProps){
+function SideBar({notes,editNote,setEditNote,createHandler,deleteHandler}:SideBarProps){
     const [isOpen,setIsOpen] = useState(false);                         //サイドバーの状態
     const [isDeleteMode,setIsDeleteMode] = useState<boolean>(false);    //削除モードの状態
-    const [selectedIds,setSelectedIds] = useState<string[]>([]);//選択されたノートを持つ関数
+    const [selectedIds,setSelectedIds] = useState<string[]>([]);        //選択されたノートを持つ関数
+
+    //削除モードで使用したuseStateの値を初期値に戻す
+    const setInit = () =>{
+        setIsDeleteMode(false);
+        setSelectedIds([]);
+    }
 
     return(
         <div className={`SideBar-Style ${isOpen ? 'open' : 'closed'}`}>
             {/* ハンバーガメニュー */}
-            <button className="Hamburger-Style" onClick={() => setIsOpen(!isOpen)}>
+            <button className="Hamburger-Style" onClick={() => {setIsOpen(!isOpen);console.log("RENDERING SIDEBAR")}}>
                 ☰
             </button>
+            
 
             {/* ノートの一覧　*/}
             {isOpen ? (
@@ -34,7 +37,7 @@ function SideBar({notes,editNote,setEditNote,createHandler}:NoteProps){
                         {isDeleteMode ?
                         <button 
                         className='Cancel-Button'
-                        onClick={() =>{ setIsDeleteMode(false), setSelectedIds([])}}>
+                        onClick={() =>{setInit()}}>
                             ❌中止
                         </button>
                         :''
@@ -44,10 +47,14 @@ function SideBar({notes,editNote,setEditNote,createHandler}:NoteProps){
                         
                         <button 
                         className= {`Delete-Button ${isDeleteMode ? 'on':''}`}
-                        onClick={() => (!isDeleteMode)
-                            ?setIsDeleteMode(true)
-                            :deleteHandler(selectedIds,notes)
-                        }
+                        onClick={() => {
+                            if (!isDeleteMode) {
+                                setIsDeleteMode(true);
+                                return;
+                            }
+                            deleteHandler(selectedIds);
+                            setInit();
+                        }}
                         >
                             🗑️削除
                         </button>
@@ -58,14 +65,14 @@ function SideBar({notes,editNote,setEditNote,createHandler}:NoteProps){
                         <li key={note.id}>
                         <button
                             className={`Notes-Style
-                            ${isDeleteMode ? 'Delete-Mode' :'' }
+                            ${isDeleteMode ? 'Delete-Mode' :null }
                             ${isDeleteMode
-                                ?(selectedIds.includes(note.id)? 'selected':'')
+                                ?(selectedIds.includes(note.id)? 'selected':null)
                                 :(editNote !== null && editNote.id === note.id ? 'selected' : '')}
                             `}
                             onClick={() => isDeleteMode //削除モード
                                 ?selectedIds.find(n => n === note.id)
-                                    ?setSelectedIds(selectedIds.filter(ids => ids !== note.id))//選択を解除したいとき
+                                    ?setSelectedIds(prev => prev.filter(ids => ids !== note.id))//選択を解除したいとき
                                     :setSelectedIds(prev => [...prev,note.id])//ケツからpush
                                 :setEditNote({ ...note })}
                         >

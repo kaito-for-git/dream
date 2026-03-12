@@ -22,9 +22,10 @@ export type MainContentProps = {
 }
 
 //useState()を受け取り内容を変更する
-export type NoteProps = {
+export type SideBarProps = {
     notes : Note[];
     editNote : CopyNote;
     setEditNote:React.Dispatch<React.SetStateAction<Note | null>>;
     createHandler:() => void;
+    deleteHandler:(selectedIds:string[]) =>  void;
 }
