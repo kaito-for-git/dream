@@ -13,10 +13,6 @@
     width: 50px;
 }
 
-.C{
-    display: flex;
-    flex-direction: row;
-}
 .Hamburger-Style{
     display: flex;
     color: white;
@@ -74,7 +70,7 @@
 
 /* 選択されているノート*/
 .Notes-Style.selected{
-    border: 1px solid #5ac8fa;
+    border: 1px solid #646cff;
 }
 
 /* 削除モードの時 */
