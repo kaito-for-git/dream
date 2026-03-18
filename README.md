@@ -35,15 +35,27 @@
 ## コーディング規約
 
 ### 命名規則
-- 型名(type)は大文字はじまり
+- **変数,関数**: 小文字大文字大文字...
+    - 例:getNoteButtonStyle
+- **フック**: use ではじめる 
+    - 例:useSideBar.ts
+- **コンポーネント**: 大文字はじまり 
+    - 例:SideBar.tsx
+- **型名(type)**: 大文字はじまり
     - 例:"NoteProps","Note"
+- **フォルダ名**: 大文字_大文字
+    - 例:Side_Bar
+- **ファイル名**: 大文字大文字繋げて書く
+    - 例:MainFeature.tsx
 
 ## 状態表
 Appが全ての状態を持ち、管理する
 |コンポーネント | 機能 | state | props|
 |:---:|:---:|:---:|:---:|
 |App|全ての状態管理,描画|Notes,selectedId|-|
-|MainContents|機能を描画する|-|Note|
+|MainContents|機能とヘッダーの箱|-|Note|
+|MainFeature|機能を描画する|-|Note|
+|Header|ヘッダーを描画する|-|-|
 |SideBar|機能の一覧を表示する|-|Notes,selectedId|
 
 ## 技術的挑戦と解決

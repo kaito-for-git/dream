@@ -1,48 +1,23 @@
 import './App.css'
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import MainContents from './components/main_contents/MainContents'
-import SideBar from './components/side_bar/SideBar'
-import { useEffect, useState } from 'react'
-import type{Note,CopyNote} from './components/Features/Note'
-import { dummydate } from './components/Data/dummydate1'
-import { saveEvent,createNewNote} from './components/Features/Utils'
+import MainContents from './Main_contents/MainContents'
+import SideBar from './Side_Bar/SideBar'
+import { useNote } from './Hooks/NoteHooks'
 
 function App() {
-  const [notes,setNotes] = useState<Note[]>(()=>{
-    const saved = localStorage.getItem("notes");
-    return saved ? JSON.parse(saved) : dummydate
-  });//ノートの状態
-  const [editNote,setEditNote] = useState<CopyNote>(null);//編集ノートのコピー
   
-  //セーブボタンのイベントハンドラ
-  const saveHandler = () =>{
-    if (!editNote) return;
-    setNotes(prev => saveEvent(prev,editNote));
-  } 
-
-  //notesが変更された時に実行する
-  useEffect(() => {
-    localStorage.setItem("notes",JSON.stringify(notes));//保存
-    //ソート
-  },[notes])
-
-  //ノート新規作成ボタンが押された時のイベントハンドラ
-  const createHandler = () => {
-    const newNote = createNewNote()
-    setNotes([newNote,...notes]);//新しいノートを追加する
-    setEditNote(newNote);
-  }
-
-  //削除モードで選択されたノートを削除する
-  const deleteHandler = (selectedIds:string[]) => {
-    if(selectedIds.length === 0)return;
-    const newNote = notes.filter(note => !selectedIds.includes(note.id));
-    setNotes(newNote);
-  }
-
+  const {
+    notes,
+    editNote,
+    setEditNote,
+    saveHandler,
+    createHandler,
+    deleteHandler
+  } = useNote(); 
+  
   return (
       <BrowserRouter>
-        <div className="app-Container">ß
+        <div className="app-Container">
             < SideBar 
               notes={notes}
               editNote={editNote}
