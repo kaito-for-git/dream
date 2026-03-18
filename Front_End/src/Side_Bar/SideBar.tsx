@@ -1,6 +1,5 @@
 import './SideBar.css'
-import { useState } from 'react'
-import type { Note, SideBarProps } from '../Features/Note'
+import type { SideBarProps } from '../Features/Note'
 import { useSideBar } from '../Hooks/SideBarHooks'
 
 //サイドバーの描画をする
