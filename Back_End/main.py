@@ -1,30 +1,42 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import engine, get_db
+from database import engine, get_db, SessionLocal
 import models, schemas
 
-# テーブルを自動作成する行も忘れずに（app = FastAPIの上がおすすめ）
+# テーブル作成
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# 修正ポイント：response_model=schemas.UserConfigResponse にする
-@app.get("/config/{user_id}", response_model=schemas.UserConfigResponse)
-def get_user_config(user_id: int, db: Session = Depends(get_db)):
-    config = db.query(models.UserConfig).filter(models.UserConfig.user_id == user_id).first()
+# DBセッションの依存注入
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# ==========================================
+# アカウント
+# - アカウント設定の取得
+# ==========================================
+
+# アカウント設定の取得
+@app.get("/config/{user_id}", response_model=schemas.UserConfigBase)
+def get_user_config(user_id: str, db: Session = Depends(get_db)):
+    config = db.query(models.UserConfig).filter(models.UserConfig.id == user_id).first()
+    if not config:
+        # 初回アクセス時などにデータがない場合のハンドリング
+        raise HTTPException(status_code=404, detail="Config not found")
     return config
 
-@app.put("/config/{user_id}")
-def update_user_config(user_id: int, config_update: schemas.UserConfigBase, db: Session = Depends(get_db)):
-    db_config = db.query(models.UserConfig).filter(models.UserConfig.user_id == user_id).first()
-    
-    # 万が一設定が存在しなかった時のエラー回避（念のため）
-    if not db_config:
-        return {"message": "設定が見つかりません"}
+# ==========================================
+# ノート
+# - ノート設定の取得
+# ==========================================
 
-    db_config.theme_color = config_update.theme_color
-    db_config.is_dark_mode = config_update.is_dark_mode
-    db_config.language = config_update.language
-    
-    db.commit()
-    return {"message": "設定を更新しました"}
+# ノートの取得
+@app.get("/notes/{user_id}", response_model=list[schemas.NoteConfigBase])
+def get_user_notes(user_id: str, db: Session = Depends(get_db)):
+    # ユーザーに紐づくノートを「全件」取得する
+    return db.query(models.Note).filter(models.Note.user_id == user_id).all()
