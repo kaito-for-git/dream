@@ -19,16 +19,63 @@ def get_db():
 # ==========================================
 # アカウント
 # - アカウント設定の取得
+# - アカウント設定の更新
+# - アカウント新規作成
+# - アカウント削除
 # ==========================================
 
 # アカウント設定の取得
-@app.get("/config/{user_id}", response_model=schemas.UserConfigBase)
+@app.get("/config/{user_id}", response_model=schemas.UserConfig)
 def get_user_config(user_id: str, db: Session = Depends(get_db)):
     config = db.query(models.UserConfig).filter(models.UserConfig.id == user_id).first()
     if not config:
         # 初回アクセス時などにデータがない場合のハンドリング
         raise HTTPException(status_code=404, detail="Config not found")
     return config
+
+# アカウント設定の更新
+@app.put("/config/{user_id}", response_model=schemas.UserConfig)
+def update_user_config(user_id: str, config_update: schemas.UserConfigUpdate, db: Session = Depends(get_db)):
+    db_config = db.query(models.UserConfig).filter(models.UserConfig.id == user_id).first()
+    
+    if not db_config:
+        raise HTTPException(status_code=404, detail="Config not found")
+
+    # 送信されたデータのみを更新
+    update_data = config_update.model_dump(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(db_config, key, value)
+
+    db.commit()
+    db.refresh(db_config)
+    return db_config
+
+# アカウント新規作成
+@app.post("/config/",status_code=204)
+def create_account(user_id:str,new_account:schemas.UserConfig,db: Session = Depends(get_db))
+    db_user = models.UserConfig(**new_account.model_dump())
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+# アカウント削除
+@app.delete("/config/{user_id}", status_code=204)
+def delete_account(user_id: str, db: Session = Depends(get_db)):
+    # ユーザー設定を探す
+    db_config = db.query(models.UserConfig).filter(models.UserConfig.user_id == user_id).first()
+    
+    if not db_config:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # そのユーザーのノートもすべて削除する
+    db.query(models.Note).filter(models.Note.user_id == user_id).delete()
+
+    # ユーザー設定（アカウント）を削除
+    db.delete(db_config)
+    db.commit()
+
+    return None
 
 # ==========================================
 # ノート
