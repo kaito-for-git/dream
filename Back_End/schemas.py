@@ -1,6 +1,11 @@
 from pydantic import BaseModel
 from typing import Optional
 
+# ==========================================
+# アカウント設定 (UserConfig)
+# - ユーザ設定の更新
+# ==========================================
+
 # アカウントベース
 class UserConfigBase(BaseModel):
     user_id:str
@@ -11,6 +16,14 @@ class UserConfigBase(BaseModel):
 
     class Config:
         from_attributes = True # SQLAlchemyモデルをPydanticに変換可能にする
+
+# アカウント設定の更新
+class UserConfigUpdate(BaseModel):
+    user_id:Optional[str] = None
+    theme_color: Optional[str] = None
+    is_dark_mode: Optional[bool] = None
+    language: Optional[str] = None
+    font_size: Optional[int] = None
 
 # ==========================================
 # ノート機能 (Note)
