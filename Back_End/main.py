@@ -8,14 +8,6 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# DBセッションの依存注入
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 # ==========================================
 # アカウント
 # - アカウント設定の取得
@@ -25,18 +17,18 @@ def get_db():
 # ==========================================
 
 # アカウント設定の取得
-@app.get("/config/{user_id}", response_model=schemas.UserConfig)
+@app.get("/user/{user_id}", response_model=schemas.UserBase)
 def get_user_config(user_id: str, db: Session = Depends(get_db)):
-    config = db.query(models.UserConfig).filter(models.UserConfig.id == user_id).first()
+    config = db.query(models.User).filter(models.User.user_id == user_id).first()
     if not config:
         # 初回アクセス時などにデータがない場合のハンドリング
         raise HTTPException(status_code=404, detail="Config not found")
     return config
 
 # アカウント設定の更新
-@app.put("/config/{user_id}", response_model=schemas.UserConfig)
+@app.put("/user/config/{user_id}", response_model=schemas.UserBase)
 def update_user_config(user_id: str, config_update: schemas.UserConfigUpdate, db: Session = Depends(get_db)):
-    db_config = db.query(models.UserConfig).filter(models.UserConfig.id == user_id).first()
+    db_config = db.query(models.User).filter(models.User.user_id == user_id).first()
     
     if not db_config:
         raise HTTPException(status_code=404, detail="Config not found")
@@ -50,32 +42,44 @@ def update_user_config(user_id: str, config_update: schemas.UserConfigUpdate, db
     db.refresh(db_config)
     return db_config
 
-# アカウント新規作成
-@app.post("/config/",status_code=204)
-def create_account(user_id:str,new_account:schemas.UserConfig,db: Session = Depends(get_db))
-    db_user = models.UserConfig(**new_account.model_dump())
+# ユーザアカウント新規作成
+@app.post("/user/",status_code=201)
+def create_account(new_account:schemas.UserCreate,db: Session = Depends(get_db)):
+    db_user = models.User(**new_account.model_dump())
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
 
-# アカウント削除
-@app.delete("/config/{user_id}", status_code=204)
+# ユーザアカウント削除
+@app.delete("/user/{user_id}", status_code=204)
 def delete_account(user_id: str, db: Session = Depends(get_db)):
     # ユーザー設定を探す
-    db_config = db.query(models.UserConfig).filter(models.UserConfig.user_id == user_id).first()
+    db_user = db.query(models.User).filter(models.User.user_id == user_id).first()
     
-    if not db_config:
+    if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
 
     # そのユーザーのノートもすべて削除する
     db.query(models.Note).filter(models.Note.user_id == user_id).delete()
 
     # ユーザー設定（アカウント）を削除
-    db.delete(db_config)
+    db.delete(db_user)
     db.commit()
 
     return None
+
+# ユーザログイン
+@app.post("/login/")
+def login_account(user_id:str,user:schemas.UserLogIn,db:Session = Depends(get_db)):
+    db_user = db.query(models.User).filter(models.User.user_id == user_id).first()
+    if db_user.password != user_password:
+        raise HTTPException(status_code=401, detail="Password is not True or User id is not True")
+
+    elif not db_user:
+        raise HTTPException(status_code=404, detail="User not found ¥n Please create account")
+     
+    return  db_user
 
 # ==========================================
 # ノート
@@ -86,14 +90,14 @@ def delete_account(user_id: str, db: Session = Depends(get_db)):
 # ==========================================
 
 # ノートの取得
-@app.get("/notes/{user_id}", response_model=list[schemas.NoteConfig])
+@app.get("/notes/{user_id}", response_model=list[schemas.NoteRespoonse])
 def get_user_notes(user_id: str, db: Session = Depends(get_db)):
     # ユーザーに紐づくノートを「全件」取得する
     return db.query(models.Note).filter(models.Note.user_id == user_id).all()
 
 # ノートの更新
-@app.put("/notes/{note_id}", response_model=schemas.NoteConfig)
-def update_note(note_id: str, note_update: schemas.NoteUpdate, db: Session = Depends(get_db)):
+@app.put("/notes/{note_id}", response_model=schemas.NoteUpdate)
+def update_note(note_id: str, note_update: schemas.NoteBase, db: Session = Depends(get_db)):
     # 指定されたIDのノートをDBから探す
     db_note = db.query(models.Note).filter(models.Note.id == note_id).first()
     
@@ -112,7 +116,7 @@ def update_note(note_id: str, note_update: schemas.NoteUpdate, db: Session = Dep
     return db_note
 
 # ノートの新規作成
-@app.post("/notes/", response_model=schemas.NoteConfig)
+@app.post("/notes/", response_model=schemas.NoteCreate)
 def create_note(note: schemas.NoteCreate, db: Session = Depends(get_db)):
     # フロントから送られた全データをそのまま保存する
     db_note = models.Note(**note.model_dump())
