@@ -1,12 +1,12 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from database import Base
 
-class UserConfig(Base):
+class User(Base):
     __tablename__ = "user_config"
 
     id = Column(String, primary_key=True, index=True)
     user_id = Column(String, unique=True, index=True)
-    user_possword = Column(String,unique=True,index=True) #パスワードの設定外部に出さない
+    user_password = Column(String,index=True) #パスワードの設定外部に出さない
     
     ##共通設定
     theme_color = Column(String, default="#3B82F6") #青
@@ -14,7 +14,7 @@ class UserConfig(Base):
     is_dark_mode = Column(Boolean, default=False)
     language = Column(String, default="ja") 
 
-class NoteConfig(Base):
+class Note(Base):
     __tablename__ = "note"
 
     #どのユーザのノートなのか
