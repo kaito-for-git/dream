@@ -2,9 +2,9 @@ import { useState,useEffect } from "react"
 import type{ Note,CopyNote } from '../Features/Note'
 import { saveEvent,createNewNote} from '../Features/NoteUtils'
 
-export const useNote = () =>{
-    const [notes,setNotes] = useState<Note[]>(()=>{
-        const saved = localStorage.getItem("notes");
+export const useNote = () => {
+    const [notes,setNotes] = useState<Note[]>(() => {
+        const saved = localStorage.getItem("notes"); //ローカル版
         return saved ? JSON.parse(saved) :[];
       });//ノートの状態
 

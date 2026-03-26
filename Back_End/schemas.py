@@ -66,7 +66,7 @@ class NoteBase(BaseModel):
 class NoteCreate(NoteBase):
     pass
 
-# ノート更新
+# ノート更新(put)
 class NoteUpdate(BaseModel):
     title: Optional[str] = None
     content: Optional[str] = None
