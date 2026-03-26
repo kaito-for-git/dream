@@ -9,6 +9,13 @@ export interface Note{
     updated:number;
 }
 
+//ノートput時の型
+export interface putNote{
+    title:String;
+    content:String;
+    updated:number;
+}
+
 //ノートのIdをまとめて同じ型にする
 export type NoteId = string;
 
